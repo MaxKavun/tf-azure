@@ -1,2 +1,3 @@
 # tf-azure
-AKS for Azure
+
+In preparation for az 900 and az 104 certifications

@@ -6,7 +6,7 @@ terraform {
     }
   }
   backend "azurerm" {
-    resource_group_name  = "1-5f1dbe88-playground-sandbox"
+    resource_group_name  = "1-8525437c-playground-sandbox"
     storage_account_name = "az900mk"
     container_name       = "tfstate"
     key                  = "terraform.tfstate"

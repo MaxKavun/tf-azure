@@ -38,4 +38,5 @@ resource "azurerm_lb_rule" "example" {
   backend_port                   = 80
   frontend_ip_configuration_name = "PublicIPAddress"
   backend_address_pool_ids       = [azurerm_lb_backend_address_pool.this.id]
+  disable_outbound_snat          = true
 }

@@ -5,7 +5,7 @@ provider "azurerm" {
 }
 
 data "azurerm_resource_group" "this" {
-  name = "1-ed15808e-playground-sandbox"
+  name = "1-f324f880-playground-sandbox"
 }
 
 module "network" {
@@ -30,4 +30,11 @@ module "load_balancer" {
   resource_group_name = data.azurerm_resource_group.this.name
   virtual_network_id  = module.network.virtual_network_id
   private_ip_address  = module.virtual_machine.private_ip_address
+}
+
+module "aks" {
+  source = "./modules/aks"
+
+  location            = data.azurerm_resource_group.this.location
+  resource_group_name = data.azurerm_resource_group.this.name
 }

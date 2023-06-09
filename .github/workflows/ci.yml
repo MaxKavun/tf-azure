@@ -13,4 +13,3 @@ jobs:
       - run: terraform init
       - id: syntax
         run: terraform fmt -recursive -check
-      

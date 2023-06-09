@@ -5,9 +5,12 @@ resource "azurerm_kubernetes_cluster" "this" {
   dns_prefix          = "k8s"
 
   network_profile {
-    network_plugin = "azure"
-    network_mode   = "transparent"
-    network_policy = "azure"
+    network_plugin     = "azure"
+    network_mode       = "transparent"
+    network_policy     = "azure"
+    service_cidr       = "10.1.0.0/24"   # ip range for kubernetes services
+    dns_service_ip     = "10.1.0.10"     # ip address of dns service within service cidr
+    docker_bridge_cidr = "172.17.0.1/16" # needs to be added to support docker build scenarious within AKS cluster 
   }
 
   default_node_pool {

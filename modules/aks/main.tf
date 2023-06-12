@@ -4,6 +4,15 @@ resource "azurerm_kubernetes_cluster" "this" {
   resource_group_name = var.resource_group_name
   dns_prefix          = "k8s"
 
+  oidc_issuer_enabled       = true
+  workload_identity_enabled = true
+  local_account_disabled    = false # due to limitation of cloud guru playground, is used to get access to api
+
+  azure_active_directory_role_based_access_control {
+    managed            = true # Azure AD for authentication
+    azure_rbac_enabled = true # Use azure AD for authorization as well
+  }
+
   network_profile {
     network_plugin     = "azure"
     network_mode       = "transparent"
@@ -27,4 +36,5 @@ resource "azurerm_kubernetes_cluster" "this" {
   tags = {
     Environment = "Test"
   }
+
 }

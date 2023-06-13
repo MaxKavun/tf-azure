@@ -87,3 +87,8 @@ resource "azurerm_subnet_nat_gateway_association" "this" {
   subnet_id      = azurerm_subnet.clusternodes.id
   nat_gateway_id = azurerm_nat_gateway.this.id
 }
+
+resource "azurerm_subnet_nat_gateway_association" "app_lb_subnet" {
+  subnet_id      = azurerm_subnet.applicationgateway.id
+  nat_gateway_id = azurerm_nat_gateway.this.id
+}

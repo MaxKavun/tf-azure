@@ -5,11 +5,25 @@ resource "azurerm_virtual_network" "this" {
   address_space       = ["10.0.0.0/16"]
 }
 
-resource "azurerm_subnet" "this" {
-  name                 = "subnetA"
+resource "azurerm_subnet" "clusternodes" {
+  name                 = "clusternodes"
   resource_group_name  = var.resource_group_name
   virtual_network_name = azurerm_virtual_network.this.name
   address_prefixes     = ["10.0.1.0/24"]
+}
+
+resource "azurerm_subnet" "applicationgateway" {
+  name                 = "applicationgateway"
+  resource_group_name  = var.resource_group_name
+  virtual_network_name = azurerm_virtual_network.this.name
+  address_prefixes     = ["10.0.2.0/24"]
+}
+
+resource "azurerm_subnet" "privatelinkendpoints" {
+  name                 = "privatelinkendpoints"
+  resource_group_name  = var.resource_group_name
+  virtual_network_name = azurerm_virtual_network.this.name
+  address_prefixes     = ["10.0.3.0/24"]
 }
 /*
 ** It's not recommended to keep 2 NSG on subnet and VM level **
@@ -70,6 +84,6 @@ resource "azurerm_nat_gateway_public_ip_association" "this" {
 }
 
 resource "azurerm_subnet_nat_gateway_association" "this" {
-  subnet_id      = azurerm_subnet.this.id
+  subnet_id      = azurerm_subnet.clusternodes.id
   nat_gateway_id = azurerm_nat_gateway.this.id
 }

@@ -5,7 +5,7 @@ provider "azurerm" {
 }
 
 data "azurerm_resource_group" "this" {
-  name = "1-740a615e-playground-sandbox"
+  name = "1-82a7667a-playground-sandbox"
 }
 
 module "network" {
@@ -14,7 +14,7 @@ module "network" {
   location            = data.azurerm_resource_group.this.location
   resource_group_name = data.azurerm_resource_group.this.name
 }
-
+/*
 module "virtual_machine" {
   source = "./modules/virtual_machine"
 
@@ -30,6 +30,14 @@ module "load_balancer" {
   resource_group_name = data.azurerm_resource_group.this.name
   virtual_network_id  = module.network.virtual_network_id
   private_ip_address  = module.virtual_machine.private_ip_address
+}*/
+
+module "app_lb" {
+  source = "./modules/application_load_balancer"
+
+  location            = data.azurerm_resource_group.this.location
+  resource_group_name = data.azurerm_resource_group.this.name
+  app_lb_subnet_id    = module.network.app_lb_subnet_id
 }
 
 module "aks" {

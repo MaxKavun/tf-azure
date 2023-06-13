@@ -12,3 +12,13 @@ variable "subnet_id" {
   type        = string
   description = "Subnet id for virtual machine"
 }
+
+variable "app_lb_id" {
+  type        = string
+  description = "Application load balancer id"
+}
+
+variable "app_lb_subnet_id" {
+  type        = string
+  description = "Subnet id for application load balancer"
+}

@@ -5,7 +5,7 @@ provider "azurerm" {
 }
 
 data "azurerm_resource_group" "this" {
-  name = "1-82a7667a-playground-sandbox"
+  name = "1-9827b411-playground-sandbox"
 }
 
 module "network" {
@@ -45,5 +45,7 @@ module "aks" {
 
   location            = data.azurerm_resource_group.this.location
   resource_group_name = data.azurerm_resource_group.this.name
+  app_lb_id           = module.app_lb.id
+  app_lb_subnet_id    = module.network.app_lb_subnet_id
   subnet_id           = module.network.subnet_id
 }

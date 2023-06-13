@@ -33,6 +33,10 @@ resource "azurerm_kubernetes_cluster" "this" {
     type = "SystemAssigned"
   }
 
+  ingress_application_gateway {
+    gateway_id = var.app_lb_id
+  }
+
   tags = {
     Environment = "Test"
   }

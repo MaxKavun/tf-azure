@@ -37,6 +37,10 @@ resource "azurerm_kubernetes_cluster" "this" {
     gateway_id = var.app_lb_id
   }
 
+  #service_mesh_profile {
+  #  mode = "Istio"
+  #}
+
   tags = {
     Environment = "Test"
   }

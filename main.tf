@@ -5,7 +5,7 @@ provider "azurerm" {
 }
 
 data "azurerm_resource_group" "this" {
-  name = "1-9827b411-playground-sandbox"
+  name = "capital-one"
 }
 
 module "network" {

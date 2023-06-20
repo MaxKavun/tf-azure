@@ -2,7 +2,7 @@ name: deploy
 run-name: ${{ github.actor }} is deploying Azure
 on: [push]
 jobs:
-  check-bats-version:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3

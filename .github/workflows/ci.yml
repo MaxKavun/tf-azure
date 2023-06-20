@@ -5,7 +5,7 @@ on:
     branches:
       - main
 jobs:
-  check-bats-version:
+  init-and-checks:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3

@@ -3,6 +3,7 @@ resource "azurerm_kubernetes_cluster" "this" {
   location            = var.location
   resource_group_name = var.resource_group_name
   dns_prefix          = "k8s"
+  kubernetes_version  = "1.25.6"
 
   oidc_issuer_enabled       = true
   workload_identity_enabled = true
@@ -14,18 +15,19 @@ resource "azurerm_kubernetes_cluster" "this" {
   }
 
   network_profile {
-    network_plugin     = "azure"
-    network_mode       = "transparent"
-    network_policy     = "azure"
-    service_cidr       = "10.1.0.0/24"   # ip range for kubernetes services
-    dns_service_ip     = "10.1.0.10"     # ip address of dns service within service cidr
+    network_plugin = "azure"
+    network_mode   = "transparent"
+    network_policy = "azure"
+    service_cidr   = "10.1.0.0/24" # ip range for kubernetes services
+    dns_service_ip = "10.1.0.10"   # ip address of dns service within service cidr
   }
 
   default_node_pool {
-    name           = "default"
-    node_count     = 2
-    vm_size        = "Standard_DS2_v2"
-    vnet_subnet_id = var.subnet_id
+    name                         = "default"
+    node_count                   = 1
+    vm_size                      = "Standard_DS2_v2"
+    vnet_subnet_id               = var.subnet_id
+    only_critical_addons_enabled = true
   }
 
   identity {
@@ -44,4 +46,23 @@ resource "azurerm_kubernetes_cluster" "this" {
     Environment = "Test"
   }
 
+}
+
+resource "azurerm_kubernetes_cluster_node_pool" "free_spot" {
+  name                  = "freeb1s"
+  kubernetes_cluster_id = azurerm_kubernetes_cluster.this.id
+  vm_size               = "Standard_D2_v2"
+  mode                  = "User"
+  os_sku                = "Ubuntu"
+  priority              = "Spot"
+  spot_max_price        = "-1"
+  eviction_policy       = "Delete"
+  enable_auto_scaling   = true
+  node_count            = 1
+  min_count             = 1
+  max_count             = 3
+
+  tags = {
+    Environment = "Production"
+  }
 }
